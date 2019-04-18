@@ -9,4 +9,5 @@ setup(
     install_requires = ["BeautifulSoup4", "requests", "urwid"],
     python_requires=">=3",
     include_package_data=True,
+    packages = ["search"]
 )
