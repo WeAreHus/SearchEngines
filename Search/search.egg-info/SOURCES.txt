@@ -1,9 +1,0 @@
-setup.py
-search/__init__.py
-search/__main__.py
-search/search.py
-search.egg-info/PKG-INFO
-search.egg-info/SOURCES.txt
-search.egg-info/dependency_links.txt
-search.egg-info/requires.txt
-search.egg-info/top_level.txt
