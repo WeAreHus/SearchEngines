@@ -1,4 +1,4 @@
-#coding:utf-8
+#!/usr/bin/env python3 
 import json
 import re
 import sys,os
@@ -140,51 +140,22 @@ def parser_csdn(query):
         soup = souper(title_href)
     
     
-
-
-    #search_results = sorted(search_results,key=lambda search_results:search_results[1])
-    #print(search_results)
-    
-    search_results = sorted(search_results, key=lambda dic : int(int(dic['read_data'])+int(dic['red']*1000)),reverse=True)
-
-        #print(search_results)
-    #search_results =  select_sort(search_results)  
-    #print(search_results)
+    #search_results = sorted(search_results, key=lambda dic : int(int(dic['read_data'])+int(dic['red']*1000)),reverse=True)
+    search_results =  select_sort(search_results)  
+   
     return (search_results, False)
 
-
-def parser_js(query):
-    headers= {
-        "cookie":"__yadk_uid=bDwCioPnl9z3BNoIkNaF5pFntBBiWDxf; read_mode=day; default_font=font2; locale=zh-CN; _m7e_session_core=4bd2e7ed5b68a133cf6e8f9586cbcfd5; Hm_lvt_0c0e9d9b1e7d617b3e6842e85b9fb068=1555321708,1555321765,1555321841,1555334141; Hm_lpvt_0c0e9d9b1e7d617b3e6842e85b9fb068=1555334338; signin_redirect=https%3A%2F%2Fwww.jianshu.com%2Fsearch%3Fq%3DIndexError%253A%2520list%2520index%2520out%2520of%2520range%26page%3D1%26type%3Dnote; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%2216a1b1a8218cef-0bac544d2ce1b1-18211c0a-2073600-16a1b1a8219551%22%2C%22%24device_id%22%3A%2216a1b1a8218cef-0bac544d2ce1b1-18211c0a-2073600-16a1b1a8219551%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_referrer%22%3A%22%22%2C%22%24latest_referrer_host%22%3A%22%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%7D%7D",
-        "user-agent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
-    }
-    search_results = []
-    session  = requests.session()
-    for x in range(1,4):
-        url = "https://www.jianshu.com/search?q="+str(query)+"type=note&page="+str(x)+"&order_by=default"
-        payload = {
-            "q":"IndexError: list index out of range",
-            "type":"note",
-            "page":x,
-            "order_by":"default"
-        }
-        html = requests.post(url,headers = headers,data=payload)
-        html.encoding = "utf-8"
-        r = html.text
-        #json = json.dumps(r)
-        print(r)
-        soup = BeautifulSoup(r,"html.parser")
-        note_list = soup.find_all("div",class_="search-content")
-        #print(note_list)
-        #for j in note_list.find_all('li'):
-            #for a in j.find_all('a',class_='title'):
-            #    t = a.get_text()
-            #    h = a["href"]
-            #    print(t)
-            #        print(h)
-           
                
-           
+def select_sort(search_results):
+    n = len(search_results)
+    for i in range(0,n):
+        min = i                             #最小元素下标标记
+        for j in range(i+1,n):
+            if int(search_results[j]["read_data"])+int(search_results[j]["red"]*1000) > int(search_results[min]["read_data"])+int(search_results[min]["red"]*1000) :
+                min = j                     #找到最小值的下标
+        search_results[min],search_results[i] = search_results[i],search_results[min]   #交换两者
+    return search_results
+    
 
 
 
