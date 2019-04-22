@@ -4,7 +4,7 @@ Search是一个终端-命令行式工具，当您的执行程序出现错误的�
 
 
 
-![demo](/home/cris/search.gif)
+![demo](https://img-blog.csdnimg.cn/20190422215735716.gif)
 
 ---
 
